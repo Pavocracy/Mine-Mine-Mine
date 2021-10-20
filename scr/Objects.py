@@ -9,11 +9,9 @@ class Objects:
         """Creates an object for each item needed for the game."""
         Objects.background = Background()
         Objects.objects = {}
-
         for filename in os.listdir("assets/objects"):
             name = filename.split(".")[0]
             Objects.objects[name] = Items(filename)
-
         Objects.font = Font()
 
 class Items:

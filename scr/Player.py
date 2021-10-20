@@ -1,5 +1,4 @@
 import pygame
-import math
 
 class Player:
     """The Player class handles all of the attributes for a player object."""
