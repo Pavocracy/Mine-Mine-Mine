@@ -23,6 +23,7 @@ class Items:
         """Sets the attributes for the object and calls the Create method for that object."""
         self.name = filename.split(".")[0]
         self.image = pygame.image.load(f'assets/objects/{filename}').convert()
+        self.mask = pygame.mask.from_surface(self.image)
         self.eaten = 0
         self.items = []
         self.Create()

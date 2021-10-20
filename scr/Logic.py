@@ -8,7 +8,7 @@ def CheckItems(player: object, objects: object) -> None:
             off_screen = 0
             if item["current_x"] > objects.background.game_width:
                 off_screen += 1
-            if player.CheckCollision(item["current_x"], item["current_y"]):
+            if player.CheckCollision(object.mask, item["current_x"], item["current_y"]):
                 object.items.remove(item)
                 object.eaten += 1
             if item["current_x"] <= (0 - object.image.get_rect().width):
