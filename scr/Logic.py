@@ -11,7 +11,9 @@ def CheckItems(player: object, objects: object) -> None:
             if player.CheckCollision(object.mask, item["current_x"], item["current_y"]):
                 object.item.remove(item)
                 object.eaten += 1
-            if item["current_x"] <= (0 - object.image.get_rect().width):
+            if objects.backgrounds["background1"].CheckOceanOverlap(object.mask, item["current_x"], item["current_y"]):
+                item["current_y"] -= 0.1
+            if item["current_x"] <= (0 - object.image.get_rect().width) or item["current_y"] <= (0 - object.image.get_rect().height):
                 object.item.remove(item)
         if off_screen == 0:
             object.Create()

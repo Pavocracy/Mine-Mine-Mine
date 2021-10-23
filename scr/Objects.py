@@ -44,7 +44,6 @@ class Items:
 
 class Backgrounds:
     """The Background class handles the texture, position and offset for the game background."""
-    scrolling_backgrounds = []
 
     def __init__(self, filename: str) -> None:
         """Creates the background object and sets the initial position and offset."""
@@ -55,24 +54,28 @@ class Backgrounds:
         self.ocean = pygame.transform.scale(self.image, (pygame.display.get_surface().get_width(), pygame.display.get_surface().get_height()))
         self.ocean.set_colorkey((255, 255, 0))
         self.ocean_mask = pygame.mask.from_surface(self.ocean)
-        if len(Objects.scrolling_backgrounds) < 2:
-            if len(Objects.scrolling_backgrounds) == 1:
-                self.new = {}
-                self.new["name"] = self.name
-                self.new["current_x"] = pygame.display.get_surface().get_width()
-                Objects.scrolling_backgrounds.append(self.new)
-            if len(Objects.scrolling_backgrounds) == 0:
-                self.new = {}
-                self.new["name"] = self.name
-                self.new["current_x"] = 0
-                Objects.scrolling_backgrounds.append(self.new)
+        self.Create()
 
     def Create(self) -> None:
         """Picks a random background to use as the next background to scroll."""
-        self.new = {}
-        self.new["name"] = f'background{random.randint(1, len(os.listdir("Assets/Backgrounds")))}'
-        self.new["current_x"] = pygame.display.get_surface().get_width()
-        Objects.scrolling_backgrounds.append(self.new)
+        if len(Objects.scrolling_backgrounds) == 1:
+            self.new = {}
+            self.new["name"] = self.name
+            self.new["current_x"] = pygame.display.get_surface().get_width()
+            Objects.scrolling_backgrounds.append(self.new)
+        if len(Objects.scrolling_backgrounds) == 0:
+            self.new = {}
+            self.new["name"] = self.name
+            self.new["current_x"] = 0
+            Objects.scrolling_backgrounds.append(self.new)
+
+    def CheckOceanOverlap(self, mask: object, object_x: int, object_y: int) -> bool:
+        """Returns True if the items position is overlapping the ocean part of the background."""
+        for background in Objects.scrolling_backgrounds:
+            offset = (background["current_x"] - object_x, 0 - object_y)
+            collision = mask.overlap(Objects.backgrounds[background["name"]].ocean_mask, offset)
+            if collision:
+                return True
 
 class Font:
     """The Font class handles the font types for the game."""
