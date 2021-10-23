@@ -7,11 +7,18 @@ class Objects:
 
     def __init__(self) -> None:
         """Creates an object for each item needed for the game."""
-        Objects.background = Background()
-        Objects.objects = {}
-        for filename in os.listdir("assets/objects"):
+        Objects.backgrounds = {}
+        Objects.scrolling_backgrounds = []
+        for filename in os.listdir("Assets/Backgrounds"):
             name = filename.split(".")[0]
-            Objects.objects[name] = Items(filename)
+            Objects.backgrounds[name] = Backgrounds(filename)
+
+        Objects.items = {}
+        Objects.items_count = len(os.listdir("Assets/Items"))
+        for filename in os.listdir("Assets/Items"):
+            name = filename.split(".")[0]
+            Objects.items[name] = Items(filename)
+
         Objects.font = Font()
 
 class Items:
@@ -20,31 +27,52 @@ class Items:
     def __init__(self, filename: str) -> None:
         """Sets the attributes for the object and calls the Create method for that object."""
         self.name = filename.split(".")[0]
-        self.image = pygame.image.load(f'assets/objects/{filename}').convert()
+        self.image = pygame.image.load(f'Assets/Items/{filename}').convert()
         self.image.set_colorkey((255, 255, 255))
         self.mask = pygame.mask.from_surface(self.image)
         self.eaten = 0
-        self.items = []
+        self.item = []
         self.Create()
 
     def Create(self) -> None:
         """Creates a random number of items with random position values and stores them in Objects.objects["name"].items."""
-        for i in range(random.randrange(1, 10)):
+        for i in range(random.randrange(1, ((int(pygame.display.get_surface().get_width() / 50) / Objects.items_count)))):
             self.new = {}
-            self.new["current_x"] = ((random.randrange(0, Objects.background.game_width)) + Objects.background.game_width)
-            self.new["current_y"] = (random.randrange(0, Objects.background.game_height))
-            self.items.append(self.new)
+            self.new["current_x"] = ((random.randrange(0, pygame.display.get_surface().get_width())) + pygame.display.get_surface().get_width())
+            self.new["current_y"] = (random.randrange(0, pygame.display.get_surface().get_height()))
+            self.item.append(self.new)
 
-class Background:
+class Backgrounds:
     """The Background class handles the texture, position and offset for the game background."""
+    scrolling_backgrounds = []
 
-    def __init__(self) -> None:
+    def __init__(self, filename: str) -> None:
         """Creates the background object and sets the initial position and offset."""
-        self.background = pygame.image.load('assets/background/background.png').convert()
-        self.game_width = pygame.display.get_surface().get_width()
-        self.game_height = pygame.display.get_surface().get_height()
-        self.background_x = 0
-        self.background_rel_x = (self.background_x % self.background.get_rect().width)
+        self.name = filename.split(".")[0]
+        self.image = pygame.image.load(f'Assets/Backgrounds/{filename}').convert()
+        self.image = pygame.transform.scale(self.image, (pygame.display.get_surface().get_width(), pygame.display.get_surface().get_height()))
+        self.ocean = pygame.image.load(f'Assets/Backgrounds/{filename}').convert()
+        self.ocean = pygame.transform.scale(self.image, (pygame.display.get_surface().get_width(), pygame.display.get_surface().get_height()))
+        self.ocean.set_colorkey((255, 255, 0))
+        self.ocean_mask = pygame.mask.from_surface(self.ocean)
+        if len(Objects.scrolling_backgrounds) < 2:
+            if len(Objects.scrolling_backgrounds) == 1:
+                self.new = {}
+                self.new["name"] = self.name
+                self.new["current_x"] = pygame.display.get_surface().get_width()
+                Objects.scrolling_backgrounds.append(self.new)
+            if len(Objects.scrolling_backgrounds) == 0:
+                self.new = {}
+                self.new["name"] = self.name
+                self.new["current_x"] = 0
+                Objects.scrolling_backgrounds.append(self.new)
+
+    def Create(self) -> None:
+        """Picks a random background to use as the next background to scroll."""
+        self.new = {}
+        self.new["name"] = f'background{random.randint(1, len(os.listdir("Assets/Backgrounds")))}'
+        self.new["current_x"] = pygame.display.get_surface().get_width()
+        Objects.scrolling_backgrounds.append(self.new)
 
 class Font:
     """The Font class handles the font types for the game."""

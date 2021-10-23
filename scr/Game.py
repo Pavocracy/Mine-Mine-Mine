@@ -8,7 +8,10 @@ import Render
 if __name__ == '__main__':
     # Initialize Game Items
     pygame.init()
-    screen = pygame.display.set_mode((640, 480)) # Window Resolution
+    game_height = pygame.display.Info().current_h * 0.75
+    game_width = game_height * 1.777
+    game_FPS = 60
+    screen = pygame.display.set_mode((game_width, game_height))
     clock = pygame.time.Clock()
     player = Player.Player()
     objects = Objects.Objects()
@@ -27,4 +30,4 @@ if __name__ == '__main__':
         # Render Game
         Render.Render(screen, player, objects)
         pygame.display.update()
-        clock.tick(60) # Frames Per Second
+        clock.tick(game_FPS)
