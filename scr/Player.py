@@ -2,7 +2,8 @@ import pygame
 
 class Player:
     """The Player class handles all of the attributes for a player object."""
-
+    # TODO: Add a check if the player is off screen. Or add bounds to keep player on screen?
+    
     def __init__(self) -> None:
         """Sets the intial attributes for the player object"""
         self.image = pygame.image.load('Assets/Player/Seagull.png').convert()

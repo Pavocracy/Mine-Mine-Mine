@@ -3,10 +3,11 @@ import sys
 
 def KeyPressed(player: object) -> None:
     """Checks the event loop for KEY press, and sets player position offsets."""
-    offset = int((pygame.display.get_surface().get_width() / 500))
+    offset = int((pygame.display.get_surface().get_width() / 500)) # This is so assets move relative to window size.
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        # pygame key events behave oddly if you dont use a variable turned on and off by key up and key down.
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                     player.y_offset = -offset

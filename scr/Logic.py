@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+# The same objects are passed multiple times here, and the same dictonaries iterated through multiple times. This IS bad.
+
 def CheckItems(player: object, objects: object) -> None:
     """Checks attributes of items. Create new items if needed. Else remove if off screen or if there is a collision."""
     for object in objects.items.values():
@@ -11,6 +13,8 @@ def CheckItems(player: object, objects: object) -> None:
             if player.CheckCollision(object.mask, item["current_x"], item["current_y"]):
                 object.item.remove(item)
                 object.eaten += 1
+
+            # "background1" as a dictionary key is only used to access the class method. This is probably bad.
             if objects.backgrounds["background1"].CheckOceanOverlap(object.mask, item["current_x"], item["current_y"]):
                 item["current_y"] -= 0.1
             if item["current_x"] <= (0 - object.image.get_rect().width) or item["current_y"] <= (0 - object.image.get_rect().height):
@@ -23,6 +27,7 @@ def CheckItems(player: object, objects: object) -> None:
             objects.scrolling_backgrounds.remove(background)
 
     if len(objects.scrolling_backgrounds) < 2:
+        # "background1" as a dictionary key is only used to access the class method. This is still probably bad.
         objects.backgrounds["background1"].Create()
 
 def MoveItems(player: object, objects: object) -> None:
@@ -35,6 +40,7 @@ def MoveItems(player: object, objects: object) -> None:
 def CheckLoss(objects: object) -> None:
     """Checks to see if the game over condition is met."""
     if objects.items["ciggy"].eaten >= 3:
+        # TODO: Add a loss screen instead of just exit.
         sys.exit()
 
 def ScrollBackground(objects: object) -> None:

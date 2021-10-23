@@ -7,13 +7,13 @@ class Objects:
 
     def __init__(self) -> None:
         """Creates an object for each item needed for the game."""
-        Objects.backgrounds = {}
-        Objects.scrolling_backgrounds = []
+        Objects.backgrounds = {} # Dictionary will contain the class objects.
+        Objects.scrolling_backgrounds = [] # List to keep track of 2 random backgrounds to render.
         for filename in os.listdir("Assets/Backgrounds"):
             name = filename.split(".")[0]
             Objects.backgrounds[name] = Backgrounds(filename)
 
-        Objects.items = {}
+        Objects.items = {} # Dictionary will contain the class objects.
         Objects.items_count = len(os.listdir("Assets/Items"))
         for filename in os.listdir("Assets/Items"):
             name = filename.split(".")[0]
@@ -31,7 +31,7 @@ class Items:
         self.image.set_colorkey((255, 255, 255))
         self.mask = pygame.mask.from_surface(self.image)
         self.eaten = 0
-        self.item = []
+        self.item = [] # List of random n of x,y coordinate pairs to render the class object n times.
         self.Create()
 
     def Create(self) -> None:
@@ -59,7 +59,7 @@ class Backgrounds:
     def Create(self) -> None:
         """Picks a random background to use as the next background to scroll."""
         if len(Objects.scrolling_backgrounds) == 1:
-            self.new = {}
+            self.new = {} # Dictonary containing name,current_x keys to add to list of backgrounds to render.
             self.new["name"] = self.name
             self.new["current_x"] = pygame.display.get_surface().get_width()
             Objects.scrolling_backgrounds.append(self.new)
