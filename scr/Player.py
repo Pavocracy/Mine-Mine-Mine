@@ -7,7 +7,7 @@ class Player:
     def __init__(self) -> None:
         """Sets the intial attributes for the player object"""
         self.image = pygame.image.load('Assets/Player/Seagull.png').convert()
-        self.image.set_colorkey((255, 255, 255))
+        self.image.set_colorkey((0, 255, 0))
         self.mask = pygame.mask.from_surface(self.image)
         self.x = 24
         self.x_offset = 0
