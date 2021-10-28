@@ -28,6 +28,7 @@ class Items:
         """Sets the attributes for the object and calls the Create method for that object."""
         self.name = filename.split(".")[0]
         self.image = pygame.image.load(f'Assets/Items/{filename}').convert()
+        self.image = pygame.transform.scale(self.image, ((pygame.display.get_surface().get_width() / 50), (pygame.display.get_surface().get_width() / 50)))
         self.image.set_colorkey((0, 255, 0))
         self.mask = pygame.mask.from_surface(self.image)
         self.eaten = 0
@@ -36,7 +37,7 @@ class Items:
 
     def Create(self) -> None:
         """Creates a random number of items with random position values and stores them in Objects.objects["name"].items."""
-        for i in range(random.randrange(1, int(((pygame.display.get_surface().get_width() / 75) / Objects.items_count)))):
+        for i in range(random.randrange(1, int(((pygame.display.get_surface().get_width() / 50) / Objects.items_count)))):
             self.new = {}
             self.new["current_x"] = ((random.randrange(0, pygame.display.get_surface().get_width())) + pygame.display.get_surface().get_width())
             self.new["current_y"] = (random.randrange(0, pygame.display.get_surface().get_height()))
