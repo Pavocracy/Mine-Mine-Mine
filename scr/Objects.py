@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+from Paths import resource_path
 
 class Objects:
     """The Objects class contains an objects dictionary of instantiated classes of game items."""
@@ -9,13 +10,13 @@ class Objects:
         """Creates an object for each item needed for the game."""
         Objects.backgrounds = {} # Dictionary will contain the class objects.
         Objects.scrolling_backgrounds = [] # List to keep track of 2 random backgrounds to render.
-        for filename in os.listdir("Assets/Backgrounds"):
+        for filename in os.listdir(resource_path("Assets/Backgrounds")):
             name = filename.split(".")[0]
             Objects.backgrounds[name] = Backgrounds(filename)
 
         Objects.items = {} # Dictionary will contain the class objects.
-        Objects.items_count = len(os.listdir("Assets/Items"))
-        for filename in os.listdir("Assets/Items"):
+        Objects.items_count = len(os.listdir(resource_path("Assets/Items")))
+        for filename in os.listdir(resource_path("Assets/Items")):
             name = filename.split(".")[0]
             Objects.items[name] = Items(filename)
 
@@ -27,7 +28,7 @@ class Items:
     def __init__(self, filename: str) -> None:
         """Sets the attributes for the object and calls the Create method for that object."""
         self.name = filename.split(".")[0]
-        self.image = pygame.image.load(f'Assets/Items/{filename}').convert()
+        self.image = pygame.image.load(resource_path(f'Assets/Items/{filename}')).convert()
         self.image = pygame.transform.scale(self.image, ((pygame.display.get_surface().get_width() / 50), (pygame.display.get_surface().get_width() / 50)))
         self.image.set_colorkey((0, 255, 0))
         self.mask = pygame.mask.from_surface(self.image)
@@ -49,9 +50,9 @@ class Backgrounds:
     def __init__(self, filename: str) -> None:
         """Creates the background object and sets the initial position and offset."""
         self.name = filename.split(".")[0]
-        self.image = pygame.image.load(f'Assets/Backgrounds/{filename}').convert()
+        self.image = pygame.image.load(resource_path(f'Assets/Backgrounds/{filename}')).convert()
         self.image = pygame.transform.scale(self.image, (pygame.display.get_surface().get_width(), pygame.display.get_surface().get_height()))
-        self.ocean = pygame.image.load(f'Assets/Backgrounds/{filename}').convert()
+        self.ocean = pygame.image.load(resource_path(f'Assets/Backgrounds/{filename}')).convert()
         self.ocean = pygame.transform.scale(self.image, (pygame.display.get_surface().get_width(), pygame.display.get_surface().get_height()))
         self.ocean.set_colorkey((10, 188, 255))
         self.ocean_mask = pygame.mask.from_surface(self.ocean)

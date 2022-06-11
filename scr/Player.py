@@ -1,4 +1,5 @@
 import pygame
+from Paths import resource_path
 
 class Player:
     """The Player class handles all of the attributes for a player object."""
@@ -6,7 +7,7 @@ class Player:
     
     def __init__(self) -> None:
         """Sets the intial attributes for the player object"""
-        self.image = pygame.image.load('Assets/Player/Seagull.png').convert()
+        self.image = pygame.image.load(resource_path('Assets/Player/Seagull.png')).convert()
         self.image = pygame.transform.scale(self.image, ((pygame.display.get_surface().get_width() / 25), (pygame.display.get_surface().get_width() / 25)))
         self.image.set_colorkey((0, 255, 0))
         self.mask = pygame.mask.from_surface(self.image)
