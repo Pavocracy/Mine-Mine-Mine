@@ -13,8 +13,8 @@ if __name__ == '__main__':
     game_FPS = 60
     screen = pygame.display.set_mode((game_width, game_height))
     clock = pygame.time.Clock()
-    player = Player.Player()
-    objects = Objects.Objects()
+    player = Player.Player(game_width, game_height)
+    objects = Objects.Objects(game_width, game_height)
 
     # TODO: Add a title screen before main game loop.
     while True:

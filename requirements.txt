@@ -1,0 +1,5 @@
+# packages for game
+pygame
+
+# packages for workflows
+pyinstaller
