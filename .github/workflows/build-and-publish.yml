@@ -34,7 +34,7 @@ jobs:
         VERSION: ${{ github.event.release.tag_name }}
 
     - name: 'Run Pyinstaller'
-      run: python3 -m pyinstaller Game.spec
+      run: pyinstaller Game.spec
 
     - name: 'Upload dist files to release'
       uses: svenstaro/upload-release-action@v2
