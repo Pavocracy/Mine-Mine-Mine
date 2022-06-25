@@ -82,7 +82,7 @@ class Objects:
         items_list = [item for item in self.items]
         items_count = len(items_list)
         item_limit = self.game_width / 50
-        for i in range(random.randrange(1, int(item_limit))):
+        for _ in range(random.randrange(1, int(item_limit))):
             new = {}
             new["name"] = items_list[random.randrange(0, items_count)]
             new["current_x"] = random.randrange(0, int(self.game_width)) + self.game_width

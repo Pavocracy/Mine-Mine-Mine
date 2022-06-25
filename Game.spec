@@ -3,10 +3,10 @@
 
 block_cipher = None
 
-assets = [('assets/Backgrounds/*', 'assets/Backgrounds'), ('assets/Fonts/*', 'assets/Fonts'), ('assets/Items/*', 'assets/Items'), ('assets/Player/*', 'assets/Player')]
+assets = []
 
 a = Analysis(
-    ['src\\Game.py'],
+    [],
     pathex=[],
     binaries=[],
     datas=assets,
@@ -29,7 +29,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='Mine-Mine-Mine-v0.0.0',
+    name='',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
